@@ -1,0 +1,65 @@
+name: webrtsp-proxy
+base: core18
+summary: WebRTSP proxy server
+adopt-info: server
+description: |
+  WebRTSP proxy server
+license: GPL-3.0
+grade: devel
+confinement: strict
+
+architectures:
+  - build-on: amd64
+  - build-on: i386
+  - build-on: armhf
+
+environment:
+  GST_DEBUG: 3
+  GST_DEBUG_NO_COLOR: 1
+  GST_PLUGIN_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gstreamer-1.0
+  GST_PLUGIN_SYSTEM_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gstreamer-1.0
+  GST_PLUGIN_SCANNER: $SNAP/usr/libexec/$SNAPCRAFT_ARCH_TRIPLET/gstreamer-1.0/gst-plugin-scanner
+
+parts:
+  lws:
+    plugin: cmake
+    source-type: git
+    source: https://github.com/warmcat/libwebsockets.git
+    source-branch: v3.2-stable
+    configflags:
+      - -DLWS_WITHOUT_TESTAPPS=ON
+    build-packages:
+      - libssl-dev
+    stage-packages:
+      - libssl1.1
+  server:
+    plugin: cmake
+    source-type: git
+    source: https://github.com/WebRTSP/Native.git
+    override-pull: |
+        snapcraftctl pull
+        snapcraftctl set-version "$(git describe)"
+    after:
+      - lws
+    configflags:
+      - -DBUILD_TEST_APPS=OFF
+      - -DBUILD_BASIC_SERVER=OFF
+      - -DBUILD_INVERSE_PROXY_CLIENT=OFF
+    build-packages:
+      - g++
+      - make
+      - libspdlog-dev
+      - libconfig-dev
+      - libgstreamer1.0-dev
+      - libgstreamer-plugins-bad1.0-dev
+    stage-packages:
+      - libconfig9
+      - gstreamer1.0-plugins-bad
+
+apps:
+  server:
+    command: InverseProxyServerApp
+    daemon: simple
+    plugs:
+      - network-bind
+      - network
