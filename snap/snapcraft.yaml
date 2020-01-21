@@ -55,7 +55,6 @@ parts:
       - libgstreamer-plugins-bad1.0-dev
     stage-packages:
       - libconfig9
-      - gstreamer1.0-plugins-bad
 
 apps:
   server:
