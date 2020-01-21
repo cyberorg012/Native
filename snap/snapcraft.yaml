@@ -55,7 +55,11 @@ parts:
       - libgstreamer-plugins-bad1.0-dev
     stage-packages:
       - libconfig9
+      - libslang2
+      - gstreamer1.0-plugins-good
       - gstreamer1.0-plugins-bad
+      - gstreamer1.0-plugins-ugly
+      - gstreamer1.0-nice
 
 apps:
   client:
