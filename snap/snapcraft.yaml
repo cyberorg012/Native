@@ -57,6 +57,7 @@ parts:
       - libconfig9
       - libslang2
       - libgpm2
+      - libpulse0
       - gstreamer1.0-plugins-good
       - gstreamer1.0-plugins-bad
       - gstreamer1.0-plugins-ugly
