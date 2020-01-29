@@ -58,6 +58,7 @@ parts:
       - libslang2
       - libgpm2
       - libpulse0
+      - libx264-152
       - gstreamer1.0-plugins-good
       - gstreamer1.0-plugins-bad
       - gstreamer1.0-plugins-ugly
