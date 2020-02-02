@@ -33,6 +33,17 @@ parts:
       - libssl-dev
     stage-packages:
       - libssl1.1
+  nice:
+    plugin: autotools
+    source-type: git
+    source: https://github.com/WebRTSP/libnice.git
+    source-branch: latest-release
+    configflags:
+      - --prefix=/opt/${SNAPCRAFT_PROJECT_NAME}
+    build-packages:
+      - pkg-config
+      - libglib2.0-dev
+      - gtk-doc-tools
   client:
     plugin: cmake
     source-type: git
@@ -42,6 +53,7 @@ parts:
         snapcraftctl set-version "$(git describe)"
     after:
       - lws
+      - nice
     configflags:
       - -DBUILD_TEST_APPS=OFF
       - -DBUILD_BASIC_SERVER=OFF
@@ -66,7 +78,7 @@ parts:
 
 apps:
   client:
-    command: InverseProxyClientApp
+    command: /usr/bin/env LD_LIBRARY_PATH="$SNAP/opt/${SNAP_NAME}/lib:$LD_LIBRARY_PATH" InverseProxyClientApp
     daemon: simple
     plugs:
       - network
