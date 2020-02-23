@@ -1,9 +1,9 @@
-name: webrtsp-proxy-client
+name: webrtsp-proxy-agent
 base: core18
-summary: WebRTSP proxy client
-adopt-info: client
+summary: WebRTSP proxy agent
+adopt-info: agent
 description: |
-  WebRTSP proxy client
+  WebRTSP proxy agent
 license: GPL-3.0
 grade: devel
 confinement: strict
@@ -44,7 +44,7 @@ parts:
       - pkg-config
       - libglib2.0-dev
       - gtk-doc-tools
-  client:
+  agent:
     plugin: cmake
     source-type: git
     source: https://github.com/WebRTSP/Native.git
@@ -77,8 +77,8 @@ parts:
       - gstreamer1.0-nice
 
 apps:
-  client:
-    command: /usr/bin/env LD_LIBRARY_PATH="$SNAP/opt/${SNAP_NAME}/lib:$LD_LIBRARY_PATH" InverseProxyClientApp
+  agent:
+    command: /usr/bin/env LD_LIBRARY_PATH="$SNAP/opt/${SNAP_NAME}/lib:$LD_LIBRARY_PATH" InverseProxyAgentApp
     daemon: simple
     plugs:
       - network
