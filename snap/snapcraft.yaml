@@ -45,7 +45,7 @@ parts:
     configflags:
       - -DBUILD_TEST_APPS=OFF
       - -DBUILD_BASIC_SERVER=OFF
-      - -DBUILD_INVERSE_PROXY_CLIENT=OFF
+      - -DBUILD_INVERSE_PROXY_AGENT=OFF
     build-packages:
       - g++
       - make
